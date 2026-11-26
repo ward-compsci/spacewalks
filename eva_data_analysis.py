@@ -7,7 +7,7 @@ def read_json_to_dataframe(input_file):
     Removes rows with invalid `duration` or `date` entries.
     
     Args:
-        input_file: json file of entries.
+        input_file (file): json file of entries.
 
     Returns:
         eva_df (pd.DataFrame): Cleaned pandas DataFrame
@@ -22,12 +22,32 @@ def read_json_to_dataframe(input_file):
 
 
 def write_dataframe_to_csv(df, output_file):
+    """
+    Save pandas DataFrame to csv
+    
+    Args:
+        df (pd.DataFrame) : pandas DataFrame to save
+        output_file (file) : csv in write mode
+    
+    Returns:
+        None
+    """
     print(f"Saving to CSV file {output_file}")
     # Save dataframe to CSV file for later analysis
     df.to_csv(output_file, index=False, encoding="utf-8")
 
 
 def plot_cumulative_time_in_space(df, graph_file):
+    """
+    Plot and show the cumulative time in space over years using Matplotlib
+
+    Args:
+        df (pd.DataFrame) : pandas DataFrame to plot
+        graph_file (str) : path to save plot
+
+    Returns:
+        None
+    """
     print(f"Plotting cumulative spacewalk duration and saving to {graph_file}")
     df["duration_hours"] = df["duration"].str.split(":").apply(lambda x: int(x[0]) + int(x[1])/60)
     df["cumulative_time"] = df["duration_hours"].cumsum()
