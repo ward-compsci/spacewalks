@@ -15,7 +15,7 @@ fieldnames = ("EVA #", "Country", "Crew    ", "Vehicle", "Date", "Duration", "Pu
 data=[]
 
 for i in range(375):
-    line=input_file.readline()
+    line = input_file.readline()
     print(line)
     data.append(json.loads(line[1:-1]))
 #data.pop(0)
@@ -25,21 +25,21 @@ csv_writer = csv.writer(output_file)
 
 
 time = []
-date =[]
+date = []
 
-j=0
+j = 0
 for i in data:
     print(data[j])
     # and this bit
     csv_writer.writerow(data[j].values())
     if 'duration' in data[j].keys():
-        duration_str=data[j]['duration']
+        duration_str = data[j]['duration']
         if duration_str == '':
             pass
         else:
-            duration_dt=dt.datetime.strptime(duration_str,'%H:%M')
+            duration_dt = dt.datetime.strptime(duration_str,'%H:%M')
             duration_hours = dt.timedelta(hours=duration_dt.hour, minutes=duration_dt.minute, seconds=duration_dt.second).total_seconds()/(60*60)
-            print(duration_dt,duration_hours)
+            print(duration_dt, duration_hours)
             time.append(duration_hours)
             if 'date' in data[j].keys():
                 date.append(dt.datetime.strptime(data[j]['date'][0:10], '%Y-%m-%d'))
@@ -49,14 +49,14 @@ for i in data:
                 time.pop(0)
     j+=1
 
-duration_dt=[0]
+duration_dt = [0]
 for i in time:
     duration_dt.append(duration_dt[-1]+i)
 
 date,time = zip(*sorted(zip(date, time)))
 
 
-plt.plot(date,duration_dt[1:], 'ko-')
+plt.plot(date, duration_dt[1:], 'ko-')
 plt.xlabel('Year')
 plt.ylabel('Total time spent in space to date (hours)')
 plt.tight_layout()
