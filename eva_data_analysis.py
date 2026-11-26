@@ -1,3 +1,5 @@
+import sys
+
 import matplotlib.pyplot as plt
 import pandas as pd
 
@@ -127,8 +129,16 @@ def add_duration_hours(df):
 
 
 if __name__ == "__main__":
-    input_file = "./eva-data.json"
-    output_file = "./eva-data.csv"
+
+    if len(sys.argv) < 3:
+        input_file = "./eva-data.json"
+        output_file = "./eva-data.csv"
+        print("Using default input and output filenames")
+    else:
+        input_file = sys.argv[1] # sys.argv[0] is the Python script
+        output_file = sys.argv[2]
+        print(f"Using input : {input_file}\nOutput : {output_file}")
+
     graph_file = "./cumulative_eva_graph.png"
 
     main(input_file = input_file, output_file = output_file, graph_file = graph_file)
