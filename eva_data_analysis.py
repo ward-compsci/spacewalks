@@ -37,7 +37,7 @@ def read_json_to_dataframe(input_file):
     Clean the data by removing any rows where the "duration" value is missing.
 
     Args:
-        input_file (file or str): The file object or path to the JSON file.
+        input_file (str): The file object or path to the JSON file.
 
     Returns:
          eva_df (pd.DataFrame): The cleaned and sorted data as a dataframe structure
@@ -57,7 +57,7 @@ def write_dataframe_to_csv(df, output_file):
 
     Args:
         df (pd.DataFrame): The input dataframe.
-        output_file (file or str): The file object or path to the output CSV file.
+        output_file (str): The file object or path to the output CSV file.
 
     Returns:
         None
@@ -127,8 +127,8 @@ def add_duration_hours(df):
 
 
 if __name__ == "__main__":
-    input_file = open("./eva-data.json", "r", encoding="ascii")
-    output_file = open("./eva-data.csv", "w", encoding="utf-8")
+    input_file = "./eva-data.json"
+    output_file = "./eva-data.csv"
     graph_file = "./cumulative_eva_graph.png"
 
     main(input_file = input_file, output_file = output_file, graph_file = graph_file)
