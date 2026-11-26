@@ -1,6 +1,35 @@
 import matplotlib.pyplot as plt
 import pandas as pd
 
+def main(input_file, output_file, graph_file):
+    """
+    Clean json to csv and plot cumulative space walk duration
+
+    Args:
+        input_file (file or str) : json file
+        output_file (file) : csv in write mode
+        graph_file (str) : path to save plot
+
+    Returns:
+        None
+    """
+
+    print("--START--")
+
+    # Read the data from JSON file
+    eva_data = read_json_to_dataframe(input_file)
+
+    # Convert and export data to CSV file
+    write_dataframe_to_csv(eva_data, output_file)
+
+    # Sort dataframe by date ready to be plotted (date values are on x-axis)
+    eva_data.sort_values("date", inplace=True)
+
+    # Plot cumulative time spent in space over years
+    plot_cumulative_time_in_space(eva_data, graph_file)
+
+    print("--END--")
+
 
 def read_json_to_dataframe(input_file):
     """
@@ -96,24 +125,10 @@ def add_duration_hours(df):
     )
     return df_copy
 
-# Main code
 
-print("--START--")
+if __name__ == "__main__":
+    input_file = open("./eva-data.json", "r", encoding="ascii")
+    output_file = open("./eva-data.csv", "w", encoding="utf-8")
+    graph_file = "./cumulative_eva_graph.png"
 
-input_file = open("./eva-data.json", "r", encoding="ascii")
-output_file = open("./eva-data.csv", "w", encoding="utf-8")
-graph_file = "./cumulative_eva_graph.png"
-
-# Read the data from JSON file
-eva_data = read_json_to_dataframe(input_file)
-
-# Convert and export data to CSV file
-write_dataframe_to_csv(eva_data, output_file)
-
-# Sort dataframe by date ready to be plotted (date values are on x-axis)
-eva_data.sort_values("date", inplace=True)
-
-# Plot cumulative time spent in space over years
-plot_cumulative_time_in_space(eva_data, graph_file)
-
-print("--END--")
+    main(input_file = input_file, output_file = output_file, graph_file = graph_file)
